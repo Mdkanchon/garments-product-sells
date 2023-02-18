@@ -12,8 +12,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StripePaymentController;
-
-
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +28,8 @@ use App\Http\Controllers\StripePaymentController;
 
 
 Auth::routes();
-// FrontendController Routes 
-Route::get('/', [FrontendController::class, 'index']);
+// FrontendController Routes
+Route::get('/', [FrontendController::class, 'index'])->name('/');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -72,6 +71,7 @@ Route::post('newslatter/post', [FrontendController::class, 'storenewslatter'])->
 Route::get('/about', [FrontendController::class, 'about']);
 Route::get('/faq', [FrontendController::class, 'faq']);
 Route::get('/contact', [FrontendController::class, 'contact']);
+Route::get('/customer-panel', [FrontendController::class, 'customer'])->name('customer.index');
 
 Route::get('shop', [FrontendController::class, 'shop']);
 Route::get('category/product/{category_id}', [FrontendController::class, 'categoryproduct']);
@@ -92,16 +92,16 @@ Route::get('product/single/{product_id}', [FrontendController::class, 'productsi
 Route::get('get/subcategory/{category_id}', [ProductController::class, 'getSubcat']);
 
 
-// CartController Routes 
+// CartController Routes
 
 Route::get('cart', [CartController::class, 'index'])->name('cart');
 Route::post('cart/post', [CartController::class, 'addtocart']);
 Route::get('cart/delete/{cart_id}', [CartController::class, 'deletecart']);
 
-// CheckoutController Routes 
+// CheckoutController Routes
 Route::get('checkout', [CheckoutController::class, 'checkout']);
 
-// OrderController Routes 
+// OrderController Routes
 Route::post('add/order', [OrderController::class, 'addorder']);
 
 

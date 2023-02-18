@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Newsletter;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\OrderList;
 use App\Models\Product;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -64,5 +67,15 @@ class FrontendController extends Controller
     return view('pages.single_category_product', compact('category_id'), [
       'products' => Product::where('category_id', $category_id)->paginate(3),
     ]);
+  }
+
+
+  public function customer()
+  {
+    // where('user_id', Auth::user()->id)
+    $all_order = Order::where('user_id', Auth::user()->id)->with(['order_list'])->get();
+    // return $all_order;
+    // $all_order_list = OrderList::where('order_id',)->get();
+    return view('pages.customer_panel', compact('all_order'));
   }
 }

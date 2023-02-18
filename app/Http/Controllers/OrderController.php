@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderList;
 use App\Models\Product;
-use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -42,6 +42,7 @@ class OrderController extends Controller
                     'user_id' => Auth::id(),
                     'product_id' => $cart->product_id,
                     'quantity' => $cart->product_quantity,
+                    'product_unite_price' => $cart->product_price,
                     'created_at' => Carbon::now(),
                 ]);
                 Product::find($cart->product_id)->decrement('quantity', $cart->product_quantity);
